@@ -20,9 +20,33 @@ namespace TotallyObedientMachine
     /// </summary>
     public partial class MainWindow : Window
     {
+        /*
+         * 
+         * \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+         * 
+         * 
+         *      TODO ----> CONVERT TO DATA GRID
+         * 
+         * 
+         * 
+         * \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+         * 
+         */
+
+        private int cols = 8;
+        private int rows = 64;
+
+        private Grid[] grid = new Grid[8];
+        private ColumnDefinition[] addrCol = new ColumnDefinition[8];
+        private ColumnDefinition[] instrCol = new ColumnDefinition[8];
+
+        private Label[] labelArr = new Label[512];
+
         public MainWindow()
         {
             InitializeComponent();
+            // Create & Add Labels to each row
+
         }
     }
 }

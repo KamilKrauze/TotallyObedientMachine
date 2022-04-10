@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TotallyObedientMachine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600">
-    <Grid>
+        Title="Memory View" Name="Window_MemView" Height="500" Width="950" MinHeight="500" MinWidth="950" MaxHeight="1080" MaxWidth="1920">
 
-    </Grid>
+    <ScrollViewer>
+        <Border Padding="5">
+            <Grid x:Name="Grid_MemView" ShowGridLines="True">
+                <DataGrid x:Name="dataGrid" MaxHeight="495" />
+
+            </Grid>
+        </Border>
+    </ScrollViewer>
+
 </Window>
