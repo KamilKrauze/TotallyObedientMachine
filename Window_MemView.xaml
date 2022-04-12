@@ -10,7 +10,6 @@
     <ScrollViewer>
         <Border Padding="5">
             <Grid x:Name="Grid_MemView" ShowGridLines="True">
-                <DataGrid x:Name="dataGrid" MaxHeight="495" />
 
             </Grid>
         </Border>
