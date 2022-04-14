@@ -8,16 +8,18 @@ namespace TotallyObedientMachine
 {
     class Memory
     {
+        private uint address;
         private string instruction;
-        private int operand;
+        private string operand;
 
-        public Memory(string instruction, int operand)
+        public Memory(uint address, string instruction, string operand)
         {
+            this.address = address;
             this.instruction = instruction;
             this.operand = operand;
         }
-
+        public uint Address { get => address; set => address = value; }
         public string Instruction { get => instruction; set => instruction = value; }
-        public int Operand { get => operand; set => operand = value; }
+        public string Operand { get => operand; set => operand = value; }
     }
 }
