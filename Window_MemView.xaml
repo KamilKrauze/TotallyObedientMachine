@@ -1,0 +1,38 @@
+﻿<Window x:Class="TotallyObedientMachine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TotallyObedientMachine"
+        mc:Ignorable="d"
+        Title="Memory View" Name="Window_MemView" Height="760" Width="1050" ResizeMode="CanMinimize">
+
+    <Grid x:Name="gridMain">
+        <StackPanel>
+            <DockPanel Height="25" Background="White">
+                <ToolBarTray DockPanel.Dock="Top" IsEnabled="True">
+                    <ToolBar Height="26" Width="1050">
+                        <Button Margin="25,0,10,0" Content="Open" Cursor="Hand" PreviewMouseLeftButtonUp="OpenButton_PreviewMouseLeftButtonUp" />
+                        <Button Margin="0,0,10,0" Content="Save" Cursor="Hand" PreviewMouseLeftButtonUp="SaveButton_PreviewMouseLeftButtonUp" />
+                    </ToolBar>
+                </ToolBarTray>
+            </DockPanel>
+
+            <Border Padding="5 25 5 0" Height="720">
+                <Grid x:Name="grid_memView">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+
+</Window>
