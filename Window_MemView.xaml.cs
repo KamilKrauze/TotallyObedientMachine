@@ -25,7 +25,7 @@ namespace TotallyObedientMachine
     public partial class MainWindow : Window
     {
 
-        private const int addresses = 256;
+        private const int maxAddresses = 256;
         private int cols = 8;
         private int rows = 32;
 
@@ -35,16 +35,22 @@ namespace TotallyObedientMachine
 
         private StackPanel[] stackPanel = new StackPanel[8];
         private DockPanel[] dockPanel = new DockPanel[256];
-        private TextBox[] txtbox_addressNo = new TextBox[addresses];
-        private TextBox[] txtbox_instruction = new TextBox[addresses];
-        private TextBox[] txtbox_operand = new TextBox[addresses];
+        private TextBox[] txtbox_addressNo = new TextBox[maxAddresses];
+        private TextBox[] txtbox_instruction = new TextBox[maxAddresses];
+        private TextBox[] txtbox_operand = new TextBox[maxAddresses];
+
+        private int previousRow;
+        private readonly Color highlightedRow_addressCol = Color.FromRgb(255, 255, 0);
+        private readonly Color highlightedRow = Color.FromRgb(200, 200, 0);
+        private readonly Color highlightedText = Colors.Black;
 
         public MainWindow()
         {
+            previousRow = 0;
             memory = new List<Memory>();
 
             // Initialize memory list
-            for (uint i = 0; i < addresses; i++)
+            for (uint i = 0; i < maxAddresses; i++)
             {
                 memory.Add(new Memory(i, "", ""));
             }
@@ -116,11 +122,51 @@ namespace TotallyObedientMachine
                 }
                 grid_memView.Children.Add(stackPanel[i]);
             }
+            updateSelectedRowBasedOnPC();
         }
+
+        private void updateSelectedRowBasedOnPC()
+        {
+            int selectedRow = Int16.Parse((string)lbl_programCounter.Content);
+
+            // Switch colors for selected row
+            txtbox_addressNo[selectedRow].Background = new SolidColorBrush(highlightedRow_addressCol);
+            txtbox_addressNo[selectedRow].Foreground = new SolidColorBrush(highlightedText);
+
+            txtbox_instruction[selectedRow].Background = new SolidColorBrush(highlightedRow);
+            txtbox_instruction[selectedRow].Foreground = new SolidColorBrush(highlightedText);
+
+            txtbox_operand[selectedRow].Background = new SolidColorBrush(highlightedRow);
+            txtbox_operand[selectedRow].Foreground = new SolidColorBrush(highlightedText);
+        }
+
+        private void revertColorOfPreviousSelectedRow()
+        {
+            if (previousRow == 0)
+            {
+                txtbox_addressNo[previousRow].Background = txtbox_addressNo[255].Background;
+                txtbox_addressNo[previousRow].Foreground = txtbox_addressNo[255].Foreground;
+                txtbox_instruction[previousRow].Background = txtbox_instruction[255].Background;
+                txtbox_instruction[previousRow].Foreground = txtbox_instruction[255].Foreground;
+                txtbox_operand[previousRow].Background = txtbox_operand[255].Background;
+                txtbox_operand[previousRow].Foreground = txtbox_operand[255].Foreground;
+
+                return;
+            }
+
+            txtbox_addressNo[previousRow].Background = txtbox_addressNo[previousRow + 2].Background;
+            txtbox_addressNo[previousRow].Foreground = txtbox_addressNo[previousRow + 2].Foreground;
+            txtbox_instruction[previousRow].Background = txtbox_instruction[previousRow + 2].Background;
+            txtbox_instruction[previousRow].Foreground = txtbox_instruction[previousRow + 2].Foreground;
+            txtbox_operand[previousRow].Background = txtbox_operand[previousRow + 2].Background;
+            txtbox_operand[previousRow].Foreground = txtbox_operand[previousRow + 2].Foreground;
+
+        }
+
         private void updateGUIMemory()
         {
             Debug.WriteLine(memory[0].Instruction);
-            for (int i=0; i<addresses; i++)
+            for (int i=0; i<maxAddresses; i++)
             {
                 
                 txtbox_instruction[i].Text = memory[i].Instruction;
@@ -192,7 +238,7 @@ namespace TotallyObedientMachine
                     {
                         using (StreamWriter sw = File.CreateText(filepath))
                         {
-                            for (int i = 0; i < addresses; i++)
+                            for (int i = 0; i < maxAddresses; i++)
                             {
                                 sw.WriteLine(memory[i].Address.ToString() + ";" + memory[i].Instruction + ";" + memory[i].Operand);
                             }
@@ -208,7 +254,7 @@ namespace TotallyObedientMachine
                         
                         using (StreamWriter sw = File.CreateText(filepath))
                         {
-                            for (int i = 0; i < addresses; i++)
+                            for (int i = 0; i < maxAddresses; i++)
                             {
                                 sw.WriteLine(memory[i].Address.ToString() + "; " + memory[i].Instruction + "; " + memory[i].Operand);
                             }
@@ -220,5 +266,26 @@ namespace TotallyObedientMachine
             }
         }
 
+        private void resetPC(object sender, MouseButtonEventArgs e)
+        {
+            previousRow = Int16.Parse((string)lbl_programCounter.Content);
+            lbl_programCounter.Content = "0";
+            updateSelectedRowBasedOnPC();
+            revertColorOfPreviousSelectedRow();
+        }
+        private void resetAC(object sender, MouseButtonEventArgs e)
+        {
+            lbl_accumulator.Content = "0";
+        }
+
+        private void btnClikck_Run_simulation(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void btnClick_Stop_simulation(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
